@@ -27,6 +27,8 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	// Player Character Functions
+
 	UFUNCTION()
 	void MoveForward(float axisValue);
 
@@ -41,6 +43,8 @@ public:
 
 	UFUNCTION()
 	void FindObject();
+
+	// Player Character Camera.
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* PlayerCamComp;
