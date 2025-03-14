@@ -5,12 +5,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
+#include "Resource_M.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
 class GAM312REABAN_API APlayerChar : public ACharacter
 {
 	GENERATED_BODY()
+
 
 public:
 	// Sets default values for this character's properties
@@ -48,5 +50,58 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* PlayerCamComp;
+
+	// Player Stats
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	float Health = 100.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	float Hunger = 100.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	float Stamina = 100.0f;
+
+	// Resource Variables 
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+	int Wood;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+	int Stone;
+
+	UPROPERTY(EditAnywhere, Category = "Resources")
+	int Berry;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resources")
+	TArray<int> ResourcesArray;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resources")
+	TArray<FString> ResourcesNameArray;
+
+
+
+
+	// Setters for Player Stats
+
+	UFUNCTION(BlueprintCallable)
+	void SetHunger(float amount);
+
+	UFUNCTION(BlueprintCallable)
+	void SetHealth(float amount);
+
+	UFUNCTION(BlueprintCallable)
+	void SetStamina(float amount);
+
+	// Reduce Stats
+
+	UFUNCTION()
+	void DecreaseStats();
+
+	// Give Resources
+	UFUNCTION()
+	void GiveResource(float amount, FString resourceType);
+
+
 
 };
