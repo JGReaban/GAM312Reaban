@@ -109,31 +109,43 @@ void APlayerChar::FindObject()
 	GEngine->AddOnScreenDebugMessage(-1, 5.0, FColor::Blue, TEXT("Finding Object!!!"));
 
 
-	// Do actual line trace
+	// Do actual line trace 
 
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECC_Visibility, QueryParams))
 	{
 		AResource_M* HitResource = Cast<AResource_M>(HitResult.GetActor());
 
-		if (HitResource)
+		// Check if player has enough stamina to gather resource
+		if (Stamina >= -5.0f)
 		{
-			FString hitName = HitResource->ResourceName;
-			int resourceAmount = HitResource->resourceAmount;
-
-			HitResource->totalResources = HitResource->totalResources - resourceAmount;
-
-			if (HitResource->totalResources >= resourceAmount)
+			// Check if it hits a resource
+			if (HitResource)
 			{
-				GiveResource(resourceAmount, hitName);
+				FString hitName = HitResource->ResourceName;
+				int resourceAmount = HitResource->resourceAmount;
 
-				check(GEngine != nullptr);
-				GEngine->AddOnScreenDebugMessage(-1, 5.0, FColor::Red, TEXT("Resource Collected!!!"));
-			}
-			else
-			{
-				HitResource->Destroy();
-				check(GEngine != nullptr);
-				GEngine->AddOnScreenDebugMessage(-1, 5.0, FColor::Red, TEXT("Resource Exhausted!!!"));
+				HitResource->totalResources = HitResource->totalResources - resourceAmount;
+
+				if (HitResource->totalResources >= resourceAmount)
+				{
+					GiveResource(resourceAmount, hitName);
+
+					check(GEngine != nullptr);
+					GEngine->AddOnScreenDebugMessage(-1, 5.0, FColor::Red, TEXT("Resource Collected!!!"));
+
+					// Spawn Decal on Resource
+					UGameplayStatics::SpawnDecalAtLocation(GetWorld(), hitDecal, FVector(10.0f, 10.0f, 10.0f), HitResult.Location, FRotator(-90, 0, 0), 2.0f);
+					
+					// Decrease Stamina since gathering is hard work
+					SetStamina(-5.0f);
+				}
+				else
+				{
+					HitResource->Destroy();
+					check(GEngine != nullptr);
+					GEngine->AddOnScreenDebugMessage(-1, 5.0, FColor::Red, TEXT("Resource Exhausted!!!"));
+
+				}
 
 			}
 
