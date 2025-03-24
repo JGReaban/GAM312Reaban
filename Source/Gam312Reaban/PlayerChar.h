@@ -8,6 +8,7 @@
 #include "Resource_M.h"
 #include "Kismet/GameplayStatics.h"
 #include "BuildingPart.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -129,6 +130,12 @@ public:
 
 	UFUNCTION()
 	void RotateBuilding();
+
+	UFUNCTION()
+	void LowerBuilding();
+
+	UFUNCTION()
+	void RaiseBuilding();
 
 
 };

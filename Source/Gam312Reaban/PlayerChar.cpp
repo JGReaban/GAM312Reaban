@@ -80,6 +80,10 @@ void APlayerChar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAction("RotPart", IE_Pressed, this, &APlayerChar::RotateBuilding);
 
+	PlayerInputComponent->BindAction("LowerPart", IE_Pressed, this, &APlayerChar::LowerBuilding);
+
+	PlayerInputComponent->BindAction("RaisePart", IE_Pressed, this, &APlayerChar::RaiseBuilding);
+
 }
 // 
 // Move Player Forwards or Back depending on input
@@ -282,8 +286,9 @@ void APlayerChar::SpawnBuilding(int buildingID, bool& isSuccess)
 
 
 		}
-
-		isSuccess = false;
+		else {
+			isSuccess = false;
+		}
 	}
 }
 
@@ -292,6 +297,30 @@ void APlayerChar::RotateBuilding()
 	if (isBuilding)
 	{
 		spawnedPart->AddActorWorldRotation(FRotator(0, 90, 0));
+	}
+}
+
+void APlayerChar::LowerBuilding()
+{
+	if (isBuilding)
+	{
+		spawnedPart->AddActorWorldRotation(FRotator(0, 0, -5));
+	}
+}
+
+void APlayerChar::RaiseBuilding()
+{
+	if (isBuilding)
+	{
+		//spawnedPart->AddActorWorldRotation(FRotator(0, 0, 5));
+		FVector StartLocation = spawnedPart->GetActorLocation();
+		FVector Direction = FVector(0.0f, 0.0f, 100.2f);
+		FVector EndLocation = Direction + StartLocation;
+		FRotator myRot(0, 0, 0);
+		FVector myScale = FVector(1.0f, 1.0f, 1.0f);
+		FTransform myTransform = UKismetMathLibrary::MakeTransform(EndLocation, myRot, myScale);
+		//spawnedPart->SetActorRelativeLocation(Direction);
+		spawnedPart->AddActorWorldTransform(myTransform);
 	}
 }
 
