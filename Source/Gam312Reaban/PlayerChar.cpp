@@ -47,6 +47,8 @@ void APlayerChar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	playerUI->UpdateBars(Health, Hunger, Stamina);
+
 	// Building Routine
 	if (isBuilding) 
 	{
@@ -191,6 +193,10 @@ void APlayerChar::SetHunger(float amount)
 	{
 		Hunger = Hunger + amount;
 	}
+	if (Hunger + amount >= 100)
+	{
+		Hunger = 100;
+	}
 }
 
 void APlayerChar::SetHealth(float amount)
@@ -199,6 +205,10 @@ void APlayerChar::SetHealth(float amount)
 	{
 		Health = Health + amount;
 	}
+	if (Health + amount >= 100)
+	{
+		Health = 100;
+	}
 }
 
 void APlayerChar::SetStamina(float amount)
@@ -206,6 +216,10 @@ void APlayerChar::SetStamina(float amount)
 	if (Stamina + amount < 100)
 	{
 		Stamina = Stamina + amount;
+	}
+	if (Stamina + amount >= 100)
+	{
+		Stamina = 100;
 	}
 }
 
@@ -320,7 +334,9 @@ void APlayerChar::RaiseBuilding()
 		FVector myScale = FVector(1.0f, 1.0f, 1.0f);
 		FTransform myTransform = UKismetMathLibrary::MakeTransform(EndLocation, myRot, myScale);
 		//spawnedPart->SetActorRelativeLocation(Direction);
-		spawnedPart->AddActorWorldTransform(myTransform);
+		//spawnedPart->AddActorWorldTransform(myTransform);
+		//spawnedPart->
+		spawnedPart->SetActorLocation(Direction);
 	}
 }
 
