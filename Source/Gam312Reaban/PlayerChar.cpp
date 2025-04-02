@@ -40,6 +40,13 @@ void APlayerChar::BeginPlay()
 	// Call Decrease Stats Function every 2 seconds
 	GetWorld()->GetTimerManager().SetTimer(StatsTimerHandle, this, &APlayerChar::DecreaseStats, 2.0f, true);
 	
+	// Objective Widget Stuff
+
+	if (objectiveWidget)
+	{
+		objectiveWidget->UpdateBuildingObjectives(0.0f);
+		objectiveWidget->UpdateMaterialObjectives(0.0f);
+	}
 }
 
 // Called every frame
@@ -156,6 +163,10 @@ void APlayerChar::FindObject()
 					{
 						GiveResource(resourceAmount, hitName);
 
+						matsCollected = matsCollected + resourceAmount;
+
+						objectiveWidget->UpdateMaterialObjectives(matsCollected);
+
 						check(GEngine != nullptr);
 						GEngine->AddOnScreenDebugMessage(-1, 5.0, FColor::Red, TEXT("Resource Collected!!!"));
 
@@ -180,7 +191,16 @@ void APlayerChar::FindObject()
 	}
 	else
 	{
+		// This is called when placing building element
 		isBuilding = false;
+
+		// Keeps track of how many objects built
+		objectsBuilt = objectsBuilt + 1.0f;
+
+		// Updates objective widget
+		objectiveWidget->UpdateBuildingObjectives(objectsBuilt);
+
+
 	}
 
 	

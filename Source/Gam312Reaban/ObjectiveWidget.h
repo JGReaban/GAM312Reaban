@@ -4,22 +4,22 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "PlayerWidget.generated.h"
+#include "ObjectiveWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GAM312REABAN_API UPlayerWidget : public UUserWidget
+class GAM312REABAN_API UObjectiveWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-
 public:
-	//  Function to Update Player HUD bars
-	//  
-	UFUNCTION(BlueprintImplementableEvent)
-	void UpdateBars(float Health1, float Hunger1, float Stamina1);
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateMaterialObjectives(float matsCollected);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void UpdateBuildingObjectives(float objectsBuilt);
 	
 };

@@ -10,6 +10,7 @@
 #include "BuildingPart.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "PlayerWidget.h"
+#include "ObjectiveWidget.h"
 #include "PlayerChar.generated.h"
 
 UCLASS()
@@ -103,6 +104,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UPlayerWidget* playerUI;
 
+	// Objective Widget Stuff
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UObjectiveWidget* objectiveWidget;
+
+	UPROPERTY()
+	float objectsBuilt;
+
+	UPROPERTY()
+	float matsCollected;
 
 	// Setters for Player Stats
 
