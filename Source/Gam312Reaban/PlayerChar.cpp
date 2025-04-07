@@ -93,6 +93,8 @@ void APlayerChar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAction("RaisePart", IE_Pressed, this, &APlayerChar::RaiseBuilding);
 
+	PlayerInputComponent->BindAction("EatBerry", IE_Pressed, this, &APlayerChar::EatABerry);
+
 }
 // 
 // Move Player Forwards or Back depending on input
@@ -357,6 +359,22 @@ void APlayerChar::RaiseBuilding()
 		//spawnedPart->AddActorWorldTransform(myTransform);
 		//spawnedPart->
 		spawnedPart->SetActorLocation(Direction);
+	}
+}
+
+void APlayerChar::EatABerry()
+{
+	// This eats a berry without having to use the menu
+	
+	// Check if the player has berries
+	// Berries are stored in ResourcesArray[2]
+
+	if (ResourcesArray[2] >= 1) 
+	{
+		SetStamina(50.0f);
+		SetHunger(5.0f);
+		SetHealth(5.0f);
+		ResourcesArray[2] = ResourcesArray[2] - 1;
 	}
 }
 

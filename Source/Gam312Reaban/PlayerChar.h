@@ -152,5 +152,10 @@ public:
 	UFUNCTION()
 	void RaiseBuilding();
 
+	// Misc Functions
+
+	UFUNCTION()
+	void EatABerry();
+
 
 };
